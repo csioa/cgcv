@@ -96,6 +96,20 @@
       gap: 1.5rem;
     }
 
+    main, .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .experience, .open-source, .skills, .education {
+      margin-bottom: 0;
+    }
+
+    .open-source, .education {
+      margin-top: auto;
+    }
+
     /* ── Job Cards ── */
     .job {
       border: 1px solid var(--border);
@@ -112,12 +126,8 @@
       justify-content: space-between;
       align-items: flex-start;
       padding: 1rem 1.25rem;
-      cursor: pointer;
-      user-select: none;
       gap: 1rem;
     }
-
-    .job-header:hover { background: var(--accent-dim); }
 
     .job-role {
       font-weight: 600;
@@ -129,6 +139,12 @@
       font-weight: 600;
       font-size: 0.88rem;
     }
+
+    .job-company a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .job-company a:hover { text-decoration: underline; }
 
     .job-meta {
       font-family: var(--mono);
@@ -144,74 +160,35 @@
       color: var(--text-muted);
     }
 
-    .toggle-icon {
-      display: inline-block;
+    .job-location a {
       font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      transition: transform 0.2s;
-    }
-    .job.open .toggle-icon { transform: rotate(90deg); }
-
-    .job-details {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.35s ease;
-      padding: 0 1.25rem;
-    }
-
-    .job.open .job-details {
-      max-height: 600px;
-      padding: 0 1.25rem 1rem;
-    }
-
-    .job-details ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .job-details li {
-      position: relative;
-      padding-left: 1.25rem;
-      margin-bottom: 0.5rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    .job-details li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
+      font-size: 0.72rem;
       color: var(--green);
+      text-decoration: none;
+      margin-right: 0.5rem;
     }
+    .job-location a:hover { text-decoration: underline; }
 
-    /* ── Sidebar ── */
-    .sidebar {
-      align-self: start;
+    .job-role a {
+      color: inherit;
+      text-decoration: none;
     }
+    .job-role a:hover { text-decoration: underline; }
 
-    .sidebar section:last-child {
-      padding-top: 1.6rem;
-    }
-
-    .sidebar section:last-child .section-title {
+    .education .section-title {
       margin-bottom: 0.1rem;
     }
 
-    .sidebar section:last-child .edu-item:last-child {
+    .education .edu-item:last-child {
       margin-bottom: 0;
     }
 
-    main section:last-child {
+    .open-source .job:last-child {
       margin-bottom: 0;
     }
 
-    main section:last-child .oss-card:last-child {
-      margin-bottom: 0;
-    }
-
-    .sidebar .section-title::before { content: '// '; }
+    .skills .section-title::before,
+    .education .section-title::before { content: '// '; }
 
     .skill-group {
       margin-bottom: 1rem;
@@ -305,22 +282,6 @@
     }
     .oss-card .pr-links a:hover { text-decoration: underline; }
 
-    /* ── Expand All ── */
-    .expand-all {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.3rem 0.7rem;
-      cursor: pointer;
-      text-transform: none;
-      letter-spacing: normal;
-      float: right;
-    }
-    .expand-all:hover { color: var(--accent); border-color: var(--accent); }
-
     /* ── Responsive ── */
     @media (max-width: 700px) {
       body { padding: 1rem; }
@@ -335,14 +296,10 @@
       header, .job, .oss-card, .edu-item { border-color: #ccc; background: #fff; }
       header h1 { color: #000; }
       .section-title { color: #333; border-color: #ccc; }
-      .job-details { max-height: none !important; padding: 0 1.25rem 1rem !important; }
-      .toggle-icon, .expand-all { display: none; }
       .tag { background: #eee; border-color: #ccc; color: #000; }
       a { color: #0366d6; }
       .contact-bar, .contact-bar a { color: #555; }
       .job-role, .job-company { color: #000; }
-      .job-details li { color: #333; }
-      .job-details li::before { color: #333; }
       .skill-label { color: #555; }
       .oss-card .oss-title, .oss-card .oss-title a { color: #333; }
     }
@@ -364,130 +321,78 @@
 
     <!-- ════ MAIN ════ -->
     <main>
-      <section>
-        <div class="section-title">Experience <button class="expand-all" onclick="toggleAll()">expand all</button></div>
+      <section class="experience">
+        <div class="section-title">Experience</div>
 
         <div class="job">
-          <div class="job-header" onclick="toggle(this)">
+          <div class="job-header">
             <div>
               <div class="job-role">Data Platform Engineer</div>
               <div class="job-company">Nordnet AB</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
-            <div class="job-meta">
-              Sep 2024 — Present<br>
-              <span class="toggle-icon">▶</span>
-            </div>
-          </div>
-          <div class="job-details">
-            <ul>
-              <li>Scaling an enterprise GCP Data Mesh by maintaining reusable Terraform modules for automated self-service BigQuery resource provisioning and seamless Pub/Sub
-  topic integration.</li>
-              <li>Managing a serverless dbt transformation layer on Cloud Run, enabling domain teams to independently deploy complex models via configuration-driven
-  workflows.</li>
-              <li>Automating end-to-end data ingestion via BigQuery Subscribers and enhancing platform discoverability, centralized governance, and real-time
-  observability.</li>
-              <li>Standardizing DX through DevContainers and specialized custom internal tooling for high-efficiency dbt development.</li>
-            </ul>
+            <div class="job-meta">Sep 2024 — Present</div>
           </div>
         </div>
 
         <div class="job">
-          <div class="job-header" onclick="toggle(this)">
+          <div class="job-header">
             <div>
               <div class="job-role">Data Engineer, Advanced Analytics &amp; AI</div>
               <div class="job-company">Handelsbanken</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
-            <div class="job-meta">
-              Sep 2023 — Sep 2024<br>
-              <span class="toggle-icon">▶</span>
-            </div>
-          </div>
-          <div class="job-details">
-            <ul>
-              <li>Designed and automated the deployment of an on-premises ML/data platform utilizing Ansible, MinIO, Prefect, MLflow, and Spark to accelerate delivery of
-  analytical insights.</li>
-            </ul>
+            <div class="job-meta">Sep 2023 — Sep 2024</div>
           </div>
         </div>
 
         <div class="job">
-          <div class="job-header" onclick="toggle(this)">
+          <div class="job-header">
             <div>
               <div class="job-role">ML Engineer / Senior Data Engineer</div>
               <div class="job-company">Anyfin AB</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
-            <div class="job-meta">
-              Jan 2020 — Aug 2023<br>
-              <span class="toggle-icon">▶</span>
-            </div>
-          </div>
-          <div class="job-details">
-            <ul>
-              <li>Built from scratch a data transfer pipeline factory and integrated multiple Postgres databases into a BigQuery Data Warehouse using Apache Beam, Cloud SQL
-  federated queries, and Airflow.</li>
-              <li>Modelled and built data transformations using dbt on top of the Data Warehouse raw data to serve different business areas.</li>
-              <li>Developed, launched and maintained a critical OCR text extraction service accepting 30% of total application volume using Python, Flask, and Docker.</li>
-              <li>Collaborated on data products such as Customer Journey Maps using dbt, Python, and Dash.</li>
-              <li>Consolidated credit underwriting components using Pydantic and Dataflow flex templates for reusable credit modelling feature pipelines.</li>
-              <li>Acted as interim team lead for a cross-functional team of 4 (Data Scientists + Python Developer).</li>
-            </ul>
+            <div class="job-meta">Jan 2020 — Aug 2023</div>
           </div>
         </div>
 
         <div class="job">
-          <div class="job-header" onclick="toggle(this)">
+          <div class="job-header">
             <div>
               <div class="job-role">Data Engineer</div>
               <div class="job-company">LeoVegas Group</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
-            <div class="job-meta">
-              Jan 2018 — Jan 2020<br>
-              <span class="toggle-icon">▶</span>
-            </div>
-          </div>
-          <div class="job-details">
-            <ul>
-              <li>Modeled and built the data warehouse in GCP BigQuery with multiple transformation layers and tiered access controls.</li>
-              <li>Developed and scheduled ETL pipelines using Apache Beam (Java SDK), BigQuery, Python, and Airflow across the LeoVegas group.</li>
-              <li>Created regulatory compliance reports meeting standards set by authorities in multiple countries/markets.</li>
-            </ul>
+            <div class="job-meta">Jan 2018 — Jan 2020</div>
           </div>
         </div>
 
         <div class="job">
-          <div class="job-header" onclick="toggle(this)">
+          <div class="job-header">
             <div>
               <div class="job-role">Data Engineer</div>
               <div class="job-company">Jagex Ltd</div>
               <div class="job-location">Cambridge, UK</div>
             </div>
-            <div class="job-meta">
-              Sep 2016 — Nov 2017<br>
-              <span class="toggle-icon">▶</span>
-            </div>
-          </div>
-          <div class="job-details">
-            <ul>
-              <li>Maintained and optimized legacy on-premises data pipelines, ensuring high availability for game analytics and player behavior modeling.</li>
-            </ul>
+            <div class="job-meta">Sep 2016 — Nov 2017</div>
           </div>
         </div>
       </section>
 
-      <section>
+      <section class="open-source">
         <div class="section-title">Open Source</div>
-        <div class="oss-card">
-          <div class="oss-title"><a href="https://github.com/open-metadata/OpenMetadata" target="_blank">OpenMetadata</a> <span style="color:var(--text-muted);
-  font-weight:400;">— Technical Contributor</span></div>
-          <p>Identified and resolved UI bugs and technical liabilities discovered during an in-depth evaluation of the platform's metadata discovery features.</p>
-          <div class="pr-links">
-            <a href="https://github.com/open-metadata/OpenMetadata/pull/19671" target="_blank">#19671</a>
-            <a href="https://github.com/open-metadata/OpenMetadata/pull/19833" target="_blank">#19833</a>
-            <a href="https://github.com/open-metadata/OpenMetadata/pull/19943" target="_blank">#19943</a>
+        <div class="job">
+          <div class="job-header">
+            <div>
+              <div class="job-role">Contributor</div>
+              <div class="job-company"><a href="https://github.com/open-metadata/OpenMetadata" target="_blank">OpenMetadata</a></div>
+              <div class="job-location">
+                <a href="https://github.com/open-metadata/OpenMetadata/pull/19671" target="_blank">#19671</a>
+                <a href="https://github.com/open-metadata/OpenMetadata/pull/19833" target="_blank">#19833</a>
+                <a href="https://github.com/open-metadata/OpenMetadata/pull/19943" target="_blank">#19943</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -495,7 +400,7 @@
 
     <!-- ════ SIDEBAR ════ -->
     <aside class="sidebar">
-      <section>
+      <section class="skills">
         <div class="section-title">Skills</div>
 
         <div class="skill-group">
@@ -548,7 +453,7 @@
         </div>
       </section>
 
-      <section>
+      <section class="education">
         <div class="section-title">Education</div>
 
         <div class="edu-item">
@@ -569,21 +474,6 @@
       </section>
     </aside>
   </div>
-
-  <script>
-  function toggle(header) {
-    header.closest('.job').classList.toggle('open');
-  }
-
-  function toggleAll() {
-    const jobs = document.querySelectorAll('.job');
-    const btn = document.querySelector('.expand-all');
-    const eduSection = document.querySelector('.sidebar section:last-child');
-    const allOpen = [...jobs].every(j => j.classList.contains('open'));
-    jobs.forEach(j => j.classList.toggle('open', !allOpen));
-    btn.textContent = allOpen ? 'expand all' : 'collapse all';
-  }
-  </script>
 
   </body>
   </html>
