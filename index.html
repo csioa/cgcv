@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charalampos Georgiadis — CV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-dim: #1f6feb33;
+      --green: #3fb950;
+      --orange: #d29922;
+      --red: #f85149;
+      --purple: #bc8cff;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    header {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      background: var(--surface);
+      margin-bottom: 1.5rem;
+    }
+
+    header h1 {
+      font-family: var(--mono);
+      font-size: 1.8rem;
+      color: var(--green);
+      margin-bottom: 0.25rem;
+    }
+    header h1::before { content: '> '; color: var(--text-muted); }
+
+    .contact-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .contact-bar a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .contact-bar a:hover { text-decoration: underline; }
+
+    /* ── Sections ── */
+    section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .section-title::before {
+      content: '# ';
+      color: var(--text-muted);
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 1.5rem;
+    }
+
+    /* ── Job Cards ── */
+    .job {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .job:hover { border-color: var(--accent); }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+    }
+
+    .job-header:hover { background: var(--accent-dim); }
+
+    .job-role {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .job-company {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .job-meta {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .job-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .toggle-icon {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    .job.open .toggle-icon { transform: rotate(90deg); }
+
+    .job-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 1.25rem;
+    }
+
+    .job.open .job-details {
+      max-height: 600px;
+      padding: 0 1.25rem 1rem;
+    }
+
+    .job-details ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .job-details li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .job-details li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar .section-title::before { content: '// '; }
+
+    .skill-group {
+      margin-bottom: 1rem;
+    }
+
+    .skill-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--orange);
+      margin-bottom: 0.3rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    /* ── Education ── */
+    .edu-item {
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .edu-item strong { color: var(--text); }
+    .edu-item .degree {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .edu-item .year {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .edu-item a { color: var(--accent); text-decoration: none; }
+    .edu-item a:hover { text-decoration: underline; }
+
+    /* ── Open Source ── */
+    .oss-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      background: var(--surface);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .oss-card .oss-title {
+      font-weight: 600;
+      color: var(--purple);
+      font-family: var(--mono);
+    }
+
+    .oss-card .oss-title a {
+      color: var(--purple);
+      text-decoration: none;
+    }
+    .oss-card .oss-title a:hover { text-decoration: underline; }
+
+    .oss-card p {
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .oss-card .pr-links {
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+    }
+
+    .oss-card .pr-links a {
+      color: var(--green);
+      text-decoration: none;
+      margin-right: 0.5rem;
+    }
+    .oss-card .pr-links a:hover { text-decoration: underline; }
+
+    /* ── Expand All ── */
+    .expand-all {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+      float: right;
+      margin-top: -1.8rem;
+    }
+    .expand-all:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .layout { grid-template-columns: 1fr; }
+      .job-header { flex-direction: column; }
+      .job-meta { text-align: left; }
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; color: #000; padding: 0; font-size: 10pt; }
+      header, .job, .oss-card { border-color: #ccc; background: #fff; }
+      header h1 { color: #000; }
+      .section-title { color: #333; border-color: #ccc; }
+      .job-details { max-height: none !important; padding: 0 1.25rem 1rem !important; }
+      .toggle-icon, .expand-all { display: none; }
+      .tag { background: #eee; border-color: #ccc; color: #000; }
+      a { color: #0366d6; }
+      .contact-bar, .contact-bar a { color: #555; }
+      .job-role, .job-company { color: #000; }
+      .job-details li { color: #333; }
+      .job-details li::before { color: #333; }
+      .skill-label { color: #555; }
+      .oss-card .oss-title, .oss-card .oss-title a { color: #333; }
+    }
+  </style>
+  </head>
+  <body>
+
+  <header>
+    <h1>Charalampos Georgiadis</h1>
+    <div class="contact-bar">
+      <span>📍 Uppsala, Sweden</span>
+      <span>✉ <a href="mailto:char.georgiadis@gmail.com">char.georgiadis@gmail.com</a></span>
+      <span>⌂ <a href="https://github.com/csioa" target="_blank">github.com/csioa</a></span>
+      <span>in <a href="https://linkedin.com/in/charalamposgeorgiadis" target="_blank">charalamposgeorgiadis</a></span>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- ════ MAIN ════ -->
+    <main>
+      <section>
+        <div class="section-title">Experience</div>
+        <button class="expand-all" onclick="toggleAll()">expand all</button>
+
+        <div class="job open">
+          <div class="job-header" onclick="toggle(this)">
+            <div>
+              <div class="job-role">Data Platform Engineer @ <span class="job-company">Nordnet AB</span></div>
+              <div class="job-location">Stockholm, SE</div>
+            </div>
+            <div class="job-meta">
+              Sep 2024 — Present<br>
+              <span class="toggle-icon">▶</span>
+            </div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Scaling an enterprise GCP Data Mesh by maintaining reusable Terraform modules for automated self-service BigQuery resource provisioning and seamless Pub/Sub
+  topic integration.</li>
+              <li>Managing a serverless dbt transformation layer on Cloud Run, enabling domain teams to independently deploy complex models via configuration-driven
+  workflows.</li>
+              <li>Automating end-to-end data ingestion via BigQuery Subscribers and enhancing platform discoverability, centralized governance, and real-time
+  observability.</li>
+              <li>Standardizing DX through DevContainers and specialized custom internal tooling for high-efficiency dbt development.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-header" onclick="toggle(this)">
+            <div>
+              <div class="job-role">Data Engineer, Advanced Analytics &amp; AI @ <span class="job-company">Handelsbanken</span></div>
+              <div class="job-location">Stockholm, SE</div>
+            </div>
+            <div class="job-meta">
+              Sep 2023 — Sep 2024<br>
+              <span class="toggle-icon">▶</span>
+            </div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Designed and automated the deployment of an on-premises ML/data platform utilizing Ansible, MinIO, Prefect, MLflow, and Spark to accelerate delivery of
+  analytical insights.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-header" onclick="toggle(this)">
+            <div>
+              <div class="job-role">ML Engineer / Senior Data Engineer @ <span class="job-company">Anyfin AB</span></div>
+              <div class="job-location">Stockholm, SE</div>
+            </div>
+            <div class="job-meta">
+              Jan 2020 — Aug 2023<br>
+              <span class="toggle-icon">▶</span>
+            </div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Built from scratch a data transfer pipeline factory and integrated multiple Postgres databases into a BigQuery Data Warehouse using Apache Beam, Cloud SQL
+  federated queries, and Airflow.</li>
+              <li>Modelled and built data transformations using dbt on top of the Data Warehouse raw data to serve different business areas.</li>
+              <li>Developed, launched and maintained a critical OCR text extraction service accepting 30% of total application volume using Python, Flask, and Docker.</li>
+              <li>Collaborated on data products such as Customer Journey Maps using dbt, Python, and Dash.</li>
+              <li>Consolidated credit underwriting components using Pydantic and Dataflow flex templates for reusable credit modelling feature pipelines.</li>
+              <li>Acted as interim team lead for a cross-functional team of 4 (Data Scientists + Python Developer).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-header" onclick="toggle(this)">
+            <div>
+              <div class="job-role">Data Engineer @ <span class="job-company">LeoVegas Group</span></div>
+              <div class="job-location">Stockholm, SE</div>
+            </div>
+            <div class="job-meta">
+              Jan 2018 — Jan 2020<br>
+              <span class="toggle-icon">▶</span>
+            </div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Modeled and built the data warehouse in GCP BigQuery with multiple transformation layers and tiered access controls.</li>
+              <li>Developed and scheduled ETL pipelines using Apache Beam (Java SDK), BigQuery, Python, and Airflow across the LeoVegas group.</li>
+              <li>Created regulatory compliance reports meeting standards set by authorities in multiple countries/markets.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-header" onclick="toggle(this)">
+            <div>
+              <div class="job-role">Data Engineer @ <span class="job-company">Jagex Ltd</span></div>
+              <div class="job-location">Cambridge, UK</div>
+            </div>
+            <div class="job-meta">
+              Sep 2016 — Nov 2017<br>
+              <span class="toggle-icon">▶</span>
+            </div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Maintained and optimized legacy on-premises data pipelines, ensuring high availability for game analytics and player behavior modeling.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Open Source</div>
+        <div class="oss-card">
+          <div class="oss-title"><a href="https://github.com/open-metadata/OpenMetadata" target="_blank">OpenMetadata</a> <span style="color:var(--text-muted);
+  font-weight:400;">— Technical Contributor</span></div>
+          <p>Identified and resolved UI bugs and technical liabilities discovered during an in-depth evaluation of the platform's metadata discovery features.</p>
+          <div class="pr-links">
+            <a href="https://github.com/open-metadata/OpenMetadata/pull/19671" target="_blank">#19671</a>
+            <a href="https://github.com/open-metadata/OpenMetadata/pull/19833" target="_blank">#19833</a>
+            <a href="https://github.com/open-metadata/OpenMetadata/pull/19943" target="_blank">#19943</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ════ SIDEBAR ════ -->
+    <aside class="sidebar">
+      <section>
+        <div class="section-title">Skills</div>
+
+        <div class="skill-group">
+          <div class="skill-label">languages</div>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Bash</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-label">cloud (GCP)</div>
+          <div class="tags">
+            <span class="tag">BigQuery</span>
+            <span class="tag">GCS</span>
+            <span class="tag">Cloud Run</span>
+            <span class="tag">Pub/Sub</span>
+            <span class="tag">Composer</span>
+            <span class="tag">Dataflow</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-label">data engineering</div>
+          <div class="tags">
+            <span class="tag">dbt</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Airflow</span>
+            <span class="tag">OpenMetadata</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-label">frameworks</div>
+          <div class="tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">Pydantic</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-label">devops &amp; tools</div>
+          <div class="tags">
+            <span class="tag">Docker</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Jenkins</span>
+            <span class="tag">Terraform</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Education</div>
+
+        <div class="edu-item">
+          <strong>Uppsala University</strong>, Sweden<br>
+          <span class="degree">MSc Computer Science</span><br>
+          <span class="year">2014 — 2016</span>
+          <ul style="list-style:none; padding:0; margin-top:0.3rem; font-size:0.78rem; color:var(--text-muted);">
+            <li>Thesis @ Ericsson Research: <a href="http://uu.diva-portal.org/smash/record.jsf?pid=diva2%3A1045730&dswid=-2553" target="_blank">Data stream performance
+  evaluation</a></li>
+            <li>Research group: <a href="https://github.com/EricssonResearch/monad" target="_blank">monad</a> — timetable-free travel platform</li>
+          </ul>
+        </div>
+
+        <div class="edu-item">
+          <strong>University of Ioannina</strong>, Greece<br>
+          <span class="degree">BSc Informatics</span><br>
+          <span class="year">2004 — 2011</span>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+  function toggle(header) {
+    header.closest('.job').classList.toggle('open');
+  }
+
+  function toggleAll() {
+    const jobs = document.querySelectorAll('.job');
+    const btn = document.querySelector('.expand-all');
+    const allOpen = [...jobs].every(j => j.classList.contains('open'));
+    jobs.forEach(j => j.classList.toggle('open', !allOpen));
+    btn.textContent = allOpen ? 'expand all' : 'collapse all';
+  }
+  </script>
+
+  </body>
+  </html>
