@@ -83,6 +83,7 @@
       padding-bottom: 0.4rem;
       margin-bottom: 1rem;
     }
+
     .section-title::before {
       content: '# ';
       color: var(--text-muted);
@@ -126,6 +127,7 @@
     .job-company {
       color: var(--accent);
       font-weight: 600;
+      font-size: 0.88rem;
     }
 
     .job-meta {
@@ -185,6 +187,30 @@
     }
 
     /* ── Sidebar ── */
+    .sidebar {
+      align-self: start;
+    }
+
+    .sidebar section:last-child {
+      padding-top: 1.6rem;
+    }
+
+    .sidebar section:last-child .section-title {
+      margin-bottom: 0.1rem;
+    }
+
+    .sidebar section:last-child .edu-item:last-child {
+      margin-bottom: 0;
+    }
+
+    main section:last-child {
+      margin-bottom: 0;
+    }
+
+    main section:last-child .oss-card:last-child {
+      margin-bottom: 0;
+    }
+
     .sidebar .section-title::before { content: '// '; }
 
     .skill-group {
@@ -216,7 +242,11 @@
 
     /* ── Education ── */
     .edu-item {
-      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      margin-bottom: 0.75rem;
       font-size: 0.85rem;
     }
 
@@ -285,8 +315,9 @@
       border-radius: 4px;
       padding: 0.3rem 0.7rem;
       cursor: pointer;
+      text-transform: none;
+      letter-spacing: normal;
       float: right;
-      margin-top: -1.8rem;
     }
     .expand-all:hover { color: var(--accent); border-color: var(--accent); }
 
@@ -301,7 +332,7 @@
     /* ── Print ── */
     @media print {
       body { background: #fff; color: #000; padding: 0; font-size: 10pt; }
-      header, .job, .oss-card { border-color: #ccc; background: #fff; }
+      header, .job, .oss-card, .edu-item { border-color: #ccc; background: #fff; }
       header h1 { color: #000; }
       .section-title { color: #333; border-color: #ccc; }
       .job-details { max-height: none !important; padding: 0 1.25rem 1rem !important; }
@@ -334,13 +365,13 @@
     <!-- ════ MAIN ════ -->
     <main>
       <section>
-        <div class="section-title">Experience</div>
-        <button class="expand-all" onclick="toggleAll()">expand all</button>
+        <div class="section-title">Experience <button class="expand-all" onclick="toggleAll()">expand all</button></div>
 
-        <div class="job open">
+        <div class="job">
           <div class="job-header" onclick="toggle(this)">
             <div>
-              <div class="job-role">Data Platform Engineer @ <span class="job-company">Nordnet AB</span></div>
+              <div class="job-role">Data Platform Engineer</div>
+              <div class="job-company">Nordnet AB</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
             <div class="job-meta">
@@ -364,7 +395,8 @@
         <div class="job">
           <div class="job-header" onclick="toggle(this)">
             <div>
-              <div class="job-role">Data Engineer, Advanced Analytics &amp; AI @ <span class="job-company">Handelsbanken</span></div>
+              <div class="job-role">Data Engineer, Advanced Analytics &amp; AI</div>
+              <div class="job-company">Handelsbanken</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
             <div class="job-meta">
@@ -383,7 +415,8 @@
         <div class="job">
           <div class="job-header" onclick="toggle(this)">
             <div>
-              <div class="job-role">ML Engineer / Senior Data Engineer @ <span class="job-company">Anyfin AB</span></div>
+              <div class="job-role">ML Engineer / Senior Data Engineer</div>
+              <div class="job-company">Anyfin AB</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
             <div class="job-meta">
@@ -407,7 +440,8 @@
         <div class="job">
           <div class="job-header" onclick="toggle(this)">
             <div>
-              <div class="job-role">Data Engineer @ <span class="job-company">LeoVegas Group</span></div>
+              <div class="job-role">Data Engineer</div>
+              <div class="job-company">LeoVegas Group</div>
               <div class="job-location">Stockholm, SE</div>
             </div>
             <div class="job-meta">
@@ -427,7 +461,8 @@
         <div class="job">
           <div class="job-header" onclick="toggle(this)">
             <div>
-              <div class="job-role">Data Engineer @ <span class="job-company">Jagex Ltd</span></div>
+              <div class="job-role">Data Engineer</div>
+              <div class="job-company">Jagex Ltd</div>
               <div class="job-location">Cambridge, UK</div>
             </div>
             <div class="job-meta">
@@ -521,9 +556,8 @@
           <span class="degree">MSc Computer Science</span><br>
           <span class="year">2014 — 2016</span>
           <ul style="list-style:none; padding:0; margin-top:0.3rem; font-size:0.78rem; color:var(--text-muted);">
-            <li>Thesis @ Ericsson Research: <a href="http://uu.diva-portal.org/smash/record.jsf?pid=diva2%3A1045730&dswid=-2553" target="_blank">Data stream performance
-  evaluation</a></li>
-            <li>Research group: <a href="https://github.com/EricssonResearch/monad" target="_blank">monad</a> — timetable-free travel platform</li>
+            <li><a href="http://uu.diva-portal.org/smash/record.jsf?pid=diva2%3A1045730&dswid=-2553" target="_blank">Master Thesis</a> — Ericsson Research</li>
+            <li><a href="https://github.com/EricssonResearch/monad" target="_blank">Monad</a> Research Group</li>
           </ul>
         </div>
 
@@ -544,6 +578,7 @@
   function toggleAll() {
     const jobs = document.querySelectorAll('.job');
     const btn = document.querySelector('.expand-all');
+    const eduSection = document.querySelector('.sidebar section:last-child');
     const allOpen = [...jobs].every(j => j.classList.contains('open'));
     jobs.forEach(j => j.classList.toggle('open', !allOpen));
     btn.textContent = allOpen ? 'expand all' : 'collapse all';
